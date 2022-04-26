@@ -1,0 +1,38 @@
+"""
+    name:  Chris Cleveland
+    
+"""
+import random
+def main():
+    n = int(input())
+    edges = [(input().split()) for _ in range(int(n))]
+    graph = {}
+    maxEdges = 0
+    start = ""
+    for edge in edges:
+        graph[edge[0]] = edge[1:]
+        if len(edge) > maxEdges:
+            maxEdges = len(edge)
+            start = edge[0]
+    ans = greedyClique(graph, start)
+    print("Max clique found is", ans)
+
+#this finds single maximal clique given a starting node that has the most outgoing edges
+def greedyClique(graph, start):
+    clique = []
+    verts = list(graph.keys())
+    clique.append(start)
+    for vert in verts:
+        append = True
+        if vert in clique:
+            append = False
+        if vert not in clique:
+            for v in clique:
+                if v not in graph[vert]:
+                    append = False
+        if append:
+            clique.append(vert)
+    return clique
+
+if __name__ == "__main__":
+    main()
